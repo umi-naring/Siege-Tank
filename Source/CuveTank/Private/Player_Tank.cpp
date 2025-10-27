@@ -35,6 +35,7 @@ void APlayer_Tank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     PlayerInputComponent->BindAxis(TEXT("UpAndDown"), this, &APlayer_Tank::UDMove);
 	PlayerInputComponent->BindAxis(TEXT("TurretUp"), this, &APlayer_Tank::TurretMove);
+    PlayerInputComponent->BindAxis(TEXT("TurretTurn"), this, &APlayer_Tank::TurretTurn);
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATankBase::Fire);
 }
 
@@ -92,9 +93,22 @@ void APlayer_Tank::TurretMove(float Value)
             CurrentRotation.Yaw,
             CurrentRotation.Roll);
         // 상하 회전 제한
-        TargetRotation.Pitch = FMath::Clamp(TargetRotation.Pitch, 0.f, 30.f);
+        TargetRotation.Pitch = FMath::Clamp(TargetRotation.Pitch, -15.f, 30.f);
         SceneRoot->SetWorldRotation(TargetRotation);
 	}
+}
+
+void APlayer_Tank::TurretTurn(float Value)
+{
+    //포탑 좌우 회전
+    if (Value != 0.0f)
+    {
+        FRotator CurrentRotation = TurretSceneRoot->GetComponentRotation();
+        FRotator TargetRotation = FRotator(CurrentRotation.Pitch,
+            CurrentRotation.Yaw + Value * TurnSpeed * GetWorld()->GetDeltaSeconds(),
+            CurrentRotation.Roll);
+        TurretSceneRoot->SetWorldRotation(TargetRotation);
+    }
 }
 
 void APlayer_Tank::MousePointerRotation(float delta)

@@ -4,15 +4,12 @@
 #include "Explosion.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankGameMode.h"
-
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -25,6 +22,8 @@ void UHealthComponent::BeginPlay()
 
 	// 언리얼 기본 대미지 전달 가능
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::DamageToken);
+
+
 	// ...
 	
 }

@@ -54,6 +54,8 @@ void AEnemy_Tank::Move(float Value)
 {
 	if (!PlayerController || !PlayerController->GetPawn()) return;
 
+	FTimerHandle FAttackHandle;
+
 	PlayerLocation = PlayerController->GetPawn()->GetActorLocation();
 	MyLocation = GetActorLocation();
 
@@ -76,14 +78,21 @@ void AEnemy_Tank::Move(float Value)
 		UE_LOG(LogTemp, Warning, TEXT("Under MinRange."));
 		AddMovementInput(-Direction, Value);
 	}
-	else
+	else if(bCanAttack)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("FIRE."));
 		SpawnBullet(ProjectileSpawnPoint->GetComponentTransform());
+
+		bCanAttack = false;
+
+		GetWorld()->GetTimerManager().SetTimer(
+			FAttackHandle,
+			this, 
+			&AEnemy_Tank::AIFire, 
+			AttackSpeed, 
+			false);
 	}
 }
 void AEnemy_Tank::AIFire()
 {
-  
-	Fire();
+	bCanAttack = true;
 }

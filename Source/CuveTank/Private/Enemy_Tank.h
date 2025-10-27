@@ -23,7 +23,8 @@ class CUVETANK_API AEnemy_Tank : public ATankBase
 		void Move(float DeltaTime);
 		void AIFire();
 
-
+		float AttackSpeed = 2.f;
+		bool bCanAttack = true;
 
 		APlayerController* PlayerController = nullptr;
 

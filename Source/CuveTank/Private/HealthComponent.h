@@ -13,7 +13,8 @@ class CUVETANK_API UHealthComponent : public UActorComponent
 	GENERATED_BODY()
 
 private:
-	
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	class UParticleSystemComponent* DeathParticle;
 public:	
 	// Sets default values for this component's properties
 	UHealthComponent();

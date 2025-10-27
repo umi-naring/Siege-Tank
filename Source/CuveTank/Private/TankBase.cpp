@@ -16,10 +16,14 @@ ATankBase::ATankBase()
 
 	HealthComp = CreateDefaultSubobject<UHealthComponent>(TEXT("HP"));
 
+	TurretSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Turret Scene"));
+	TurretSceneRoot ->SetupAttachment(GetMesh());
+
 	SceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("BombScene"));
-	SceneRoot->SetupAttachment(GetMesh());
+	SceneRoot->SetupAttachment(TurretSceneRoot);
+
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(SceneRoot);
+	ProjectileSpawnPoint->AttachToComponent(SceneRoot, FAttachmentTransformRules::KeepRelativeTransform);
 	ProjectileSpawnPoint->SetRelativeLocation(FVector(100.f, 0.f, 50.f));
 
 	// 🟩 이동 컴포넌트 추가

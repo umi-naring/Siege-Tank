@@ -36,6 +36,7 @@ private:
 	void Move(float DeltaTime);
 	void UDMove(float Value);
 	void TurretMove(float Value);
+	void TurretTurn(float Value);
 
 	void MousePointerRotation(float delta);
 
