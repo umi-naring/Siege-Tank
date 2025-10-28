@@ -68,16 +68,10 @@ void AEnemy_Tank::Move(float Value)
 	float MinRange = StopDistance - error;
 	float MaxRange = StopDistance + error;
 
-	if (Distance > MaxRange)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Over MaxRange."));
-		AddMovementInput(Direction, Value);
-	}
-	else if (Distance < MinRange)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Under MinRange."));
-		AddMovementInput(-Direction, Value);
-	}
+	if (Distance > MaxRange) AddMovementInput(Direction, Value);
+
+	else if (Distance < MinRange) AddMovementInput(-Direction, Value);
+
 	else if(bCanAttack)
 	{
 		SpawnBullet(ProjectileSpawnPoint->GetComponentTransform());

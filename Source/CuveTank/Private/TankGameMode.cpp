@@ -7,6 +7,11 @@
 #include "Player_Tank.h"
 #include "Kismet/GameplayStatics.h"	
 
+ATankGameMode::ATankGameMode()
+{
+	//게임 시작 UI 처리
+
+}
 void ATankGameMode::BeginPlay()
 {
 	Super::BeginPlay();
@@ -23,7 +28,7 @@ void ATankGameMode::BeginPlay()
 	GetWorldTimerManager().SetTimer(
 		PlayerEnableTimerHandle,
 		PlayerEnableDelegate,
-		3.f,
+		0.01f,
 		false
 	);
 }

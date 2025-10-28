@@ -14,6 +14,8 @@ class CUVETANK_API ATankGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	ATankGameMode();
 protected:
 	virtual void BeginPlay() override;
 

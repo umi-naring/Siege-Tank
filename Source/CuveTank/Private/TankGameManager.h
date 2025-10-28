@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "HealthComponentclass.generated.h"
+#include "TankGameManager.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class CUVETANK_API UHealthComponentclass : public UActorComponent
+class UTankGameManager : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UHealthComponentclass();
+	UTankGameManager();
 
 protected:
 	// Called when the game starts

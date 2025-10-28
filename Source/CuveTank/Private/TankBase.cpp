@@ -25,18 +25,12 @@ ATankBase::ATankBase()
 	ProjectileSpawnPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->AttachToComponent(SceneRoot, FAttachmentTransformRules::KeepRelativeTransform);
 	ProjectileSpawnPoint->SetRelativeLocation(FVector(100.f, 0.f, 50.f));
-
-	// 🟩 이동 컴포넌트 추가
-	MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
-	MovementComponent->UpdatedComponent = RootComponent;
-	MovementComponent->MaxSpeed = 600.f;
 }
 
 // Called when the game starts or when spawned
 void ATankBase::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame

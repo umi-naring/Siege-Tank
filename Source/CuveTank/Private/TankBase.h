@@ -21,8 +21,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnSpeed = 100.f;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
-	UFloatingPawnMovement* MovementComponent;
 	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
