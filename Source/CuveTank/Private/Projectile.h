@@ -21,6 +21,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float Damage = 50.f;
 
+	float ReallyDamage = 0.f;
 
 #pragma region Explosion
 
@@ -43,6 +44,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	class USoundBase* HitSound;
+
+private:
+	float DamageCalculate(float bulletDamage, float EnemyDamage);
 
 public:	
 	// Sets default values for this actor's properties

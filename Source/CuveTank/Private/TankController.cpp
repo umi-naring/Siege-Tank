@@ -20,7 +20,7 @@ void ATankController::Tick(float DeltaTime)
 
 }
 
-void ATankController::ShowWidget(TSubclassOf<UUserWidget> HUDClass)
+UUserWidget* ATankController::ShowWidget(TSubclassOf<UUserWidget> HUDClass)
 {
 	if (HUDClass)
 	{
@@ -30,6 +30,7 @@ void ATankController::ShowWidget(TSubclassOf<UUserWidget> HUDClass)
 			MainHUDInstance->AddToViewport();
 		}
 	}
+	return MainHUDInstance;
 }
 
 void ATankController::HideWidget(TSubclassOf<UUserWidget> HUDClass)

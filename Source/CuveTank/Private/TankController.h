@@ -22,7 +22,7 @@ public:
 	ATankController();
 
 	UFUNCTION(BlueprintCallable, Category = "UI")
-	void ShowWidget(TSubclassOf<UUserWidget> HUDClass);
+	UUserWidget* ShowWidget(TSubclassOf<UUserWidget> HUDClass);
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void HideWidget(TSubclassOf<UUserWidget> HUDClass);
 

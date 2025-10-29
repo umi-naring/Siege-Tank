@@ -16,6 +16,13 @@ class CUVETANK_API AEnemy_Tank : public ATankBase
 
 
 	private:
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	float StopDistance = 2000.f; // 플레이어와 유지할 최소 거리
+	UPROPERTY(EditAnywhere, Category = "AI")
+	float error = 100.f;
+
+	private:
 		APawn* PlayerPawn;
 
 		FVector MoveDirection = FVector::ZeroVector;
@@ -23,14 +30,12 @@ class CUVETANK_API AEnemy_Tank : public ATankBase
 		void Move(float DeltaTime);
 		void AIFire();
 
-		float AttackSpeed = 2.f;
 		bool bCanAttack = true;
 
 		APlayerController* PlayerController = nullptr;
 
+		
 
-		float StopDistance = 2000.f; // 플레이어와 유지할 최소 거리
-		float error = 100.f;
 	protected:
 
 		virtual void BeginPlay() override;

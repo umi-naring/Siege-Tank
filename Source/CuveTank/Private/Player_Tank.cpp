@@ -13,7 +13,7 @@ APlayer_Tank::APlayer_Tank()
 
 
     SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
-    SpringArm->SetupAttachment(RootComponent);
+    SpringArm->SetupAttachment(GetMesh());
     SpringArm->TargetArmLength = 10000.f;
     SpringArm->bEnableCameraLag = true;
     SpringArm->CameraLagSpeed = 3.f;
@@ -34,6 +34,7 @@ void APlayer_Tank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     PlayerInputComponent->BindAxis(TEXT("UpAndDown"), this, &APlayer_Tank::UDMove);
+    PlayerInputComponent->BindAxis(TEXT("LeftAndRight"), this, &APlayer_Tank::TankRotation);
 	PlayerInputComponent->BindAxis(TEXT("TurretUp"), this, &APlayer_Tank::TurretMove);
     PlayerInputComponent->BindAxis(TEXT("TurretTurn"), this, &APlayer_Tank::TurretTurn);
 	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &ATankBase::Fire);
@@ -42,9 +43,6 @@ void APlayer_Tank::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 void APlayer_Tank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-
-	MousePointerRotation(DeltaTime);
-
 	/*Move(DeltaTime);*/
 }
 
@@ -83,6 +81,19 @@ void APlayer_Tank::UDMove(float Value)
     }
 }
 
+void APlayer_Tank::TankRotation(float Value)
+{
+    if (TankPlayerController)
+    {
+		    FRotator CurrentRotation = GetMesh()->GetComponentRotation();
+            FRotator NewRotator = FRotator(CurrentRotation.Pitch, 
+                CurrentRotation.Yaw + Value * GetWorld()->GetDeltaSeconds() * TurnSpeed, 
+                CurrentRotation.Roll);
+
+            GetMesh()->SetWorldRotation(NewRotator);
+    }
+}
+
 void APlayer_Tank::TurretMove(float Value)
 {
     //포탑 상하 회전(SCENE 기준 0~30도)
@@ -93,7 +104,8 @@ void APlayer_Tank::TurretMove(float Value)
             CurrentRotation.Yaw,
             CurrentRotation.Roll);
         // 상하 회전 제한
-        TargetRotation.Pitch = FMath::Clamp(TargetRotation.Pitch, -15.f, 30.f);
+        TargetRotation.Pitch = FMath::Clamp(TargetRotation.Pitch, MinAngle, MaxAngle);
+		UpdateAngleUI();
         SceneRoot->SetWorldRotation(TargetRotation);
 	}
 }
@@ -111,24 +123,6 @@ void APlayer_Tank::TurretTurn(float Value)
     }
 }
 
-void APlayer_Tank::MousePointerRotation(float delta)
-{
-    if (TankPlayerController)
-    {
-        TankPlayerController->bShowMouseCursor = true;
-
-        // 마우스 커서 방향으로 포탑 회전
-        FHitResult HitResult;
-        if (TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, HitResult))
-        {
-            FVector ToTarget = HitResult.ImpactPoint - GetMesh()->GetComponentLocation();
-            FRotator TargetRotation = FRotator(0.f, ToTarget.Rotation().Yaw, 0.f);
-            FQuat NewRotation = FQuat::Slerp(GetMesh()->GetComponentRotation().Quaternion(),
-                TargetRotation.Quaternion(), delta * TurnSpeed);
-            GetMesh()->SetWorldRotation(NewRotation);
-        }
-    }
-}
 void APlayer_Tank::BaseEnableInput(bool bEnable)
 {
     APlayerController* controller = Cast<APlayerController>(GetController());

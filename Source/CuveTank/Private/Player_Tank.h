@@ -22,7 +22,11 @@ private:
 	class UCameraComponent* Camera;
 	FVector MoveDirection = FVector::ZeroVector;
 
-
+public :
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Turret")
+	float MinAngle = -20.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Turret")
+	float MaxAngle = 30.f;
 private :
 	APlayerController* TankPlayerController = nullptr;
 
@@ -38,9 +42,13 @@ private:
 	void TurretMove(float Value);
 	void TurretTurn(float Value);
 
-	void MousePointerRotation(float delta);
-
+	void TankRotation(float delta);
+	
+	
 public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void BaseEnableInput(bool bEnable);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Turret")
+	void UpdateAngleUI();
 };

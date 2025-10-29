@@ -60,7 +60,9 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp,
 	const FHitResult& Hit)
 { 
 	//총알 생성한 객체(오너, 주인)의 주소
-	AActor* MyOwner = GetOwner();
+
+	//총알 생성한 객체인 주인의 탱크 베이스 끌고 와서 함수 선언을 해주고 싶음
+	ATankBase* MyOwner = Cast<ATankBase>(GetOwner());
 
 	if(MyOwner == nullptr)
 	{
@@ -79,12 +81,14 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp,
 	if (OtherActor != MyOwner && OtherActor != this && OtherActor != nullptr)
 	{
 		ATankBase* Enemy = Cast<ATankBase>(OtherActor);// Enemy_Tank(ABasePawn 상속)인지 확인
+
+
 		if (Enemy)
 		{
 			// 데미지 적용
 			UGameplayStatics::ApplyDamage(
 				Enemy,          // 대상
-				Damage,         // float DamageAmount (Projectile에 변수로 만들어둬)
+				DamageCalculate(MyOwner->SendAttack, Enemy->SendDefense),         // float DamageAmount (Projectile에 변수로 만들어둬)
 				GetInstigatorController(), // 누가 발사했는지
 				this,           // DamageCauser
 				UDamageType::StaticClass() // 데미지 타입
@@ -113,3 +117,14 @@ void AProjectile::Tick(float DeltaTime)
 	
 }
 
+float AProjectile::DamageCalculate(float OwnerAttack, float EnemyDefense)
+{
+	float EndDamage = OwnerAttack * Damage;
+
+	if (EndDamage <= 0.f)
+	{
+		EndDamage = 1.f;
+	}
+
+	return EndDamage;
+}

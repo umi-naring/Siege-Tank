@@ -15,13 +15,24 @@ class CUVETANK_API ATankBase : public ACharacter
 	GENERATED_BODY()
 
 protected:
+	UPROPERTY(EditAnywhere, Category = "Stats")
+	float Attack = 10.f;
+
+	UPROPERTY(EditAnywhere, Category = "Stats")
+	float Defense = 5.f;
+
+	UPROPERTY(EditAnywhere, Category = "Stats")
+	float AttackSpeed = 1.f;
+
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float MoveSpeed = 500.f;
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float TurnSpeed = 100.f;
 
-	
+public:
+	float SendAttack = Attack;
+	float SendDefense = Defense;
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* BaseMesh;
@@ -76,6 +87,5 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<class AProjectile> ProjectileClass;
-
 
 };
