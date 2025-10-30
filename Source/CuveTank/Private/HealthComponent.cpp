@@ -29,6 +29,7 @@ void UHealthComponent::BeginPlay()
 }
 AExplosion* UHealthComponent::Explosion_Enemy(AActor* DamagedActor, FTransform transform)
 {
+	transform.SetLocation(DamagedActor->GetActorLocation() + FVector(0,0,5));
 	AExplosion* Explosion = GetWorld()->SpawnActor<AExplosion>(ExplosionClass, transform);
 
 	if (Explosion != nullptr)

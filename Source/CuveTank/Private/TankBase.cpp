@@ -86,25 +86,6 @@ AProjectile* ATankBase::SpawnBullet(FTransform transform)
 //	}
 //	return ActualDamage;
 //}
-
-FVector ATankBase::CheckFloor()
-{
-	FVector Start = GetActorLocation();
-	FVector End = Start - FVector(0.f, 0.f, 10000.f);
-	FHitResult GroundHit;
-	bool bHitGround = GetWorld()->LineTraceSingleByChannel(
-		GroundHit,
-		Start,
-		End,
-		ECollisionChannel::ECC_Visibility
-	);
-	if (bHitGround)
-	{
-		return GroundHit.ImpactPoint;
-	}
-	return FVector::ZeroVector;
-}
-
 void ATankBase::HandleDestruction()
 {
 

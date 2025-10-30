@@ -119,7 +119,17 @@ void AProjectile::Tick(float DeltaTime)
 
 float AProjectile::DamageCalculate(float OwnerAttack, float EnemyDefense)
 {
-	float EndDamage = OwnerAttack * Damage;
+	float DenfensePer = (100* FMath::Pow(EnemyDefense, 2)) / (FMath::Pow(EnemyDefense, 2) + 2);
+
+	float MaxDenfensePer = DenfensePer + 2.f;
+	float MinDenfensePer = DenfensePer - 2.f;
+
+	MaxDenfensePer = FMath::Clamp(MaxDenfensePer, 0.f, 100.f);
+	MinDenfensePer = FMath::Clamp(MinDenfensePer, 0.f, 100.f);
+
+	DenfensePer = FMath::FRandRange(MinDenfensePer, MaxDenfensePer);
+
+	float EndDamage = OwnerAttack - (OwnerAttack * DenfensePer / 100);
 
 	if (EndDamage <= 0.f)
 	{

@@ -15,19 +15,19 @@ class CUVETANK_API ATankBase : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float Attack = 10.f;
 
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float Defense = 5.f;
 
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	float AttackSpeed = 1.f;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 	float MoveSpeed = 500.f;
 
-	UPROPERTY(EditAnywhere, Category = "Movement")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement")
 	float TurnSpeed = 100.f;
 
 public:
@@ -64,7 +64,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	FVector CheckFloor();
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
